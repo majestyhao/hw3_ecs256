@@ -1,18 +1,24 @@
 library(ggplot2)
 
 # approximates the distribution of a given nonnegative RV by a mixture pf Erlangs 
-# and approximation of a constant randoms variable (single Erlang is used)
+# and approximation of a constant (single Erlang is used)
 # r is the desired value for the Erlang parameter r
 # nmix is the desired # of compoents in the mixture; for use only if const is NULL
 # qftn is the quantile function for the given distribution
 # const is the value of a constant that we wish to approximate
 erlangmix <- function(r, nmix = NULL, qftn = NULL, const = NULL) {
+  if (const = NULL) {
   # approximates the distribution of a given nonnegative RV by a mixture pf Erlangs
   # any distribution can be approximated by constants (constants/interpoints connected together)
   # any constants can be approximated by Erlang (as EX@Erlang)
   interpoints <- (1: nmix) / (nmix + 1)
   iMean <- qftn(interpoints) # EX/mean for ith interpoint
   lamb <- r/iMean # EX = r/lamb
+  }
+  else {
+    # approximation of a constant (single Erlang is used)
+    lamb <- r/const
+  }
   return(list(r = r, lamb = lamb))
 }
 
